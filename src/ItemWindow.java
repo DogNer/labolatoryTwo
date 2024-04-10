@@ -1,12 +1,7 @@
-import Model.Group;
 import Model.StuctOfGroup;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 
 public class ItemWindow extends JFrame{
     private JButton btnCreate;

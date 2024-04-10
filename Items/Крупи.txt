@@ -1,1 +1,6 @@
-Item{name='sf', description='xz', price=5.0, maker='cz', group='Крупи'}
+Item{name='Рис', description='Опис рису', price=50.0, maker='Виробник1', group='Крупи', 'Кількість на складі: 0'}
+Item{name='Гречка', description='Опис гречки', price=60.0, maker='Виробник2', group='Крупи', 'Кількість на складі: 0'}
+Item{name='Кукурудзяна крупа', description='Опис кукурудзяної крупи', price=40.0, maker='Виробник3', group='Крупи', 'Кількість на складі: 0'}
+Item{name='Рис', description='Опис рису', price=50.0, maker='Виробник1', group='Крупи', 'Кількість на складі: 0'}
+Item{name='Гречка', description='Опис гречки', price=60.0, maker='Виробник2', group='Крупи', 'Кількість на складі: 0'}
+Item{name='Кукурудзяна крупа', description='Опис кукурудзяної крупи', price=40.0, maker='Виробник3', group='Крупи', 'Кількість на складі: 0'}
