@@ -1,0 +1,1 @@
+Item{name='sf', description='xz', price=5.0, maker='cz', group='Крупи'}
