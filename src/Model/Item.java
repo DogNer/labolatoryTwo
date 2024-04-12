@@ -14,6 +14,7 @@ public class Item {
         this.price = price;
         this.maker = maker;
         this.group = group;
+        this.itemOnStore = 0;
     }
 
     public int getItemOnStore() {
@@ -73,5 +74,14 @@ public class Item {
                 ", maker='" + maker + '\'' +
                 ", group='" + group + '\'' +
                 ", 'Кількість на складі: " + itemOnStore + "\'}";
+    }
+
+    public String outputFormat() {
+        return "Назва: " + name + "\n" +
+                "Опис: " + description + "\n" +
+                "Ціна: " + price + "\n" +
+                "Виробник: " + maker + "\n" +
+                "Група: " + group + "\n" +
+                "Кількість на складі: " + itemOnStore + "\n";
     }
 }

@@ -1,3 +1,4 @@
+import Adapter.ChooserAdapter;
 import Model.Item;
 import Model.StuctOfGroup;
 
@@ -7,20 +8,25 @@ import java.awt.event.ActionEvent;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class DeleteItemMenu extends JFrame{
     private JPanel panel1;
-    private JComboBox selectDelete;
     private JButton btnReturn;
     private JButton btnDel;
+    private JTextField txtInput;
 
     public DeleteItemMenu() throws HeadlessException {
         this.setSize(500, 300);
         this.add(panel1);
 
-        for(int i = 0; i < StuctOfGroup.arrayGoods.size(); ++i){
-            selectDelete.addItem(StuctOfGroup.arrayGoods.get(i).getName());
+        ArrayList<String> items = new ArrayList<String>();
+        for (int i = 0; i < StuctOfGroup.arrayGoods.size(); i++) {
+            String item = StuctOfGroup.arrayGoods.get(i).getName();
+            items.add(item);
         }
+
+        ChooserAdapter chooserGroupWindow = new ChooserAdapter(txtInput, items);
 
         btnReturn.addActionListener(new AbstractAction() {
             @Override
@@ -32,8 +38,13 @@ public class DeleteItemMenu extends JFrame{
         btnDel.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if (txtInput.getText().equals("")) {
+                    JOptionPane.showMessageDialog(null, "Введіть назву товару");
+                    return;
+                }
+
                 for(int i = 0; i < StuctOfGroup.arrayGoods.size(); ++i){
-                    if (StuctOfGroup.arrayGoods.get(i).getName().equals(selectDelete.getSelectedItem().toString())) {
+                    if (StuctOfGroup.arrayGoods.get(i).getName().equals(txtInput.getText())) {
                         Item it = StuctOfGroup.arrayGoods.get(i);
                         StuctOfGroup.arrayGoods.remove(i);
                         rewriteFile(it);

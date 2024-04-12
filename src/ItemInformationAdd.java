@@ -1,3 +1,4 @@
+import Adapter.ChooserAdapter;
 import Model.Item;
 import Model.StuctOfGroup;
 
@@ -6,7 +7,7 @@ import java.awt.event.ActionEvent;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.sql.Struct;
+import java.util.ArrayList;
 
 public class ItemInformationAdd extends JFrame{
     private JTextField nameText;
@@ -15,20 +16,26 @@ public class ItemInformationAdd extends JFrame{
     private JButton btnSave;
     private JTextField makerText;
     private JTextField priceText;
-    private JComboBox chooserGroup;
+    private JTextField txtInput;
 
     public ItemInformationAdd() {
         this.setSize(600, 400);
 
         this.add(panel);
 
-        chooserGroup.addItem("Крупи");
+        ArrayList<String> items = new ArrayList<String>();
+        for (int i = 0; i < StuctOfGroup.arrayGroup.size(); i++) {
+            String item = StuctOfGroup.arrayGroup.get(i).getName();
+            items.add(item);
+        }
+
+        ChooserAdapter chooserAdapter = new ChooserAdapter(txtInput, items);
 
         btnSave.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e){
                 if (nameText.getText().isEmpty() || descText.getText().isEmpty() || makerText.getText().isEmpty()
-                        || priceText.getText().isEmpty() || chooserGroup.getSelectedItem().toString().isEmpty()) {
+                        || priceText.getText().isEmpty() || txtInput.getText().isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Please fill all fields");
                     return;
                 }
@@ -51,7 +58,7 @@ public class ItemInformationAdd extends JFrame{
                         descText.getText(),
                         price,
                         makerText.getText(),
-                        chooserGroup.getSelectedItem().toString()
+                        txtInput.getText()
                 );
 
                 for(int i = 0; i < StuctOfGroup.arrayGoods.size(); ++i){

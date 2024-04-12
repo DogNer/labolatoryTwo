@@ -50,5 +50,31 @@ public class MenuWindow extends JFrame{
                 buyWindow.setVisible(true);
             }
         });
+
+        btnCout.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (StuctOfGroup.arrayGoods.size() == 0) {
+                    JOptionPane.showMessageDialog(null, "Список товарів порожній");
+                    return;
+                }
+
+                OutputWindow countWindow = new OutputWindow();
+                countWindow.setVisible(true);
+            }
+        });
+
+        btnSearch.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (StuctOfGroup.arrayGoods.size() == 0) {
+                    JOptionPane.showMessageDialog(null, "Список товарів порожній");
+                    return;
+                }
+
+                SearchWindow searchWindow = new SearchWindow();
+                searchWindow.setVisible(true);
+            }
+        });
     }
 }

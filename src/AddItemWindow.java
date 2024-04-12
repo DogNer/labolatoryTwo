@@ -1,27 +1,34 @@
+import Adapter.ChooserAdapter;
 import Model.Item;
 import Model.StuctOfGroup;
 
 import javax.swing.*;
+import javax.swing.text.JTextComponent;
 import java.awt.event.ActionEvent;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class AddItemWindow extends JFrame{
     private JPanel panel;
     private JTextField priceText;
     private JButton btnBack;
     private JButton btnSave;
-    private JComboBox nameItem;
+    private JTextField txtInput;
 
     public AddItemWindow() {
         this.setSize(500, 300);
 
         this.add(panel);
 
+        ArrayList<String> items = new ArrayList<String>();
         for (int i = 0; i < StuctOfGroup.arrayGoods.size(); i++) {
-            nameItem.addItem(StuctOfGroup.arrayGoods.get(i).getName());
+            String item = StuctOfGroup.arrayGoods.get(i).getName();
+            items.add(item);
         }
+
+        ChooserAdapter chooserGroupWindow = new ChooserAdapter(txtInput, items);
 
         btnBack.addActionListener(new AbstractAction() {
             @Override
@@ -46,7 +53,12 @@ public class AddItemWindow extends JFrame{
                     return;
                 }
 
-                String name = nameItem.getSelectedItem().toString();
+                String name = txtInput.getText();
+                if(name.equals("")) {
+                    JOptionPane.showMessageDialog(null, "Введіть назву товару");
+                    return;
+                }
+
                 for (int i = 0; i < StuctOfGroup.arrayGoods.size(); i++) {
                     if (StuctOfGroup.arrayGoods.get(i).getName().equals(name)) {
                         int privCnt = StuctOfGroup.arrayGoods.get(i).getItemOnStore();

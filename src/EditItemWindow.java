@@ -1,3 +1,4 @@
+import Adapter.ChooserAdapter;
 import Model.Item;
 import Model.StuctOfGroup;
 
@@ -6,34 +7,44 @@ import java.awt.*;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class EditItemWindow extends JFrame{
     private JPanel panel1;
     private JTextField editDescription;
     private JButton btnSave;
     private JButton btnReturn;
-    private JComboBox chooserGoods;
     private JTextField editMaker;
     private JTextField editPrice;
+    private JTextField txtInput;
+    public int pos = 0;
 
     public EditItemWindow() throws HeadlessException {
         this.setSize(500, 300);
         this.add(panel1);
 
+        ArrayList<String> items = new ArrayList<String>();
         for (int i = 0; i < StuctOfGroup.arrayGoods.size(); i++) {
-            chooserGoods.addItem(StuctOfGroup.arrayGoods.get(i).getName());
+            String item = StuctOfGroup.arrayGoods.get(i).getName();
+            items.add(item);
         }
 
-        chooserGoods.addActionListener(e -> {
-            editDescription.setText(StuctOfGroup.arrayGoods.get(chooserGoods.getSelectedIndex()).getDescription());
-            editMaker.setText(StuctOfGroup.arrayGoods.get(chooserGoods.getSelectedIndex()).getMaker());
-            editPrice.setText(String.valueOf(StuctOfGroup.arrayGoods.get(chooserGoods.getSelectedIndex()).getPrice()));
-        });
+        ChooserAdapter chooserGroupWindow = new ChooserAdapter(txtInput, items);
 
+        for(int i = 0; i < StuctOfGroup.arrayGoods.size(); i++) {
+            if (StuctOfGroup.arrayGoods.get(i).getName().equals(txtInput.getText())) {
+                editDescription.setText(StuctOfGroup.arrayGoods.get(i).getDescription());
+                editMaker.setText(StuctOfGroup.arrayGoods.get(i).getMaker());
+                editPrice.setText(String.valueOf(StuctOfGroup.arrayGoods.get(i).getPrice()));
 
+                pos = i;
+                break;
+            }
+        }
 
         btnSave.addActionListener(e -> {
-            if (editDescription.getText().isEmpty() || editMaker.getText().isEmpty() || editPrice.getText().isEmpty()) {
+            if (editDescription.getText().isEmpty() || editMaker.getText().isEmpty()
+                    || editPrice.getText().isEmpty() || txtInput.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Будь ласка, заповніть всі поля");
                 return;
             }
@@ -51,11 +62,11 @@ public class EditItemWindow extends JFrame{
                 return;
             }
 
-            StuctOfGroup.arrayGoods.get(chooserGoods.getSelectedIndex()).setDescription(editDescription.getText());
-            StuctOfGroup.arrayGoods.get(chooserGoods.getSelectedIndex()).setMaker(editMaker.getText());
-            StuctOfGroup.arrayGoods.get(chooserGoods.getSelectedIndex()).setPrice(price);
+            StuctOfGroup.arrayGoods.get(pos).setDescription(editDescription.getText());
+            StuctOfGroup.arrayGoods.get(pos).setMaker(editMaker.getText());
+            StuctOfGroup.arrayGoods.get(pos).setPrice(price);
 
-            rewriteFile(StuctOfGroup.arrayGoods.get(chooserGoods.getSelectedIndex()));
+            rewriteFile(StuctOfGroup.arrayGoods.get(pos));
 
             JOptionPane.showMessageDialog(null, "Зміни збережено");
             this.setVisible(false);
