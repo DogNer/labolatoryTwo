@@ -3,21 +3,21 @@ import Model.Item;
 import Model.StuctOfGroup;
 
 import javax.swing.*;
-import javax.swing.text.JTextComponent;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class AddItemWindow extends JFrame{
-    private JPanel panel;
+public class BuyWindow extends JFrame{
     private JTextField priceText;
     private JButton btnBack;
     private JButton btnSave;
+    private JPanel panel;
     private JTextField txtInput;
 
-    public AddItemWindow() {
+    public BuyWindow() throws HeadlessException {
         this.setSize(500, 300);
 
         this.add(panel);
@@ -54,7 +54,8 @@ public class AddItemWindow extends JFrame{
                 }
 
                 String name = txtInput.getText();
-                if(name.equals("")) {
+
+                if (name.equals("")) {
                     JOptionPane.showMessageDialog(null, "Введіть назву товару");
                     return;
                 }
@@ -63,9 +64,14 @@ public class AddItemWindow extends JFrame{
                     if (StuctOfGroup.arrayGoods.get(i).getName().equals(name)) {
                         int privCnt = StuctOfGroup.arrayGoods.get(i).getItemOnStore();
 
-                        StuctOfGroup.arrayGoods.get(i).setItemOnStore(privCnt + cntItem);
+                        if (privCnt < cntItem) {
+                            JOptionPane.showMessageDialog(null, "На складі недостатньо товару");
+                            return;
+                        }
+
+                        StuctOfGroup.arrayGoods.get(i).setItemOnStore(privCnt - cntItem);
                         rewriteFile(StuctOfGroup.arrayGoods.get(i));
-                        JOptionPane.showMessageDialog(null, "На склад додано " + cntItem + " одиниць товару " + name);
+                        JOptionPane.showMessageDialog(null, "Зі складу видалено " + cntItem + " одиниць товару " + name);
                         closeWindow();
                         return;
                     }
@@ -74,20 +80,20 @@ public class AddItemWindow extends JFrame{
         });
     }
 
-    private void closeWindow() {
-        this.setVisible(false);
-    }
-
-    private void rewriteFile(Item good) {
+    private void rewriteFile(Item item) {
         try {
-            FileWriter writer = new FileWriter("Items/" + good.getGroup() + ".txt");
+            FileWriter writer = new FileWriter("Items/" + item.getGroup() + ".txt", false);
             BufferedWriter bufferedWriter = new BufferedWriter(writer);
-            for (Item item : StuctOfGroup.arrayGoods) {
-                bufferedWriter.write(item + "\n");
+            for (int i = 0; i < StuctOfGroup.arrayGoods.size(); i++) {
+                bufferedWriter.write(StuctOfGroup.arrayGoods.get(i) + "\n");
             }
             bufferedWriter.flush();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void closeWindow() {
+        this.setVisible(false);
     }
 }
