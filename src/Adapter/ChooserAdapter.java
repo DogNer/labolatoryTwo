@@ -1,3 +1,6 @@
+/**
+ * Адаптер для JComboBox, який дозволяє використовувати його як автозаповнення для JTextField
+ */
 package Adapter;
 
 import javax.swing.*;
@@ -15,6 +18,11 @@ public class ChooserAdapter {
         setupAutoComplete(txtInput, items);
     }
 
+    /**
+     * Перевірка чи відбувається зміна
+     * @param cbInput
+     * @return
+     */
     private boolean isAdjusting(JComboBox cbInput) {
         if (cbInput.getClientProperty("is_adjusting") instanceof Boolean) {
             return (Boolean) cbInput.getClientProperty("is_adjusting");
@@ -22,10 +30,21 @@ public class ChooserAdapter {
         return false;
     }
 
+    /**
+     * Встановлення зміни
+     * @param cbInput
+     * @param adjusting
+     */
     private void setAdjusting(JComboBox cbInput, boolean adjusting) {
         cbInput.putClientProperty("is_adjusting", adjusting);
     }
 
+    /**
+     * Налаштування автозаповнення
+     * Елементи вибираються зі спискн items
+     * @param txtInput
+     * @param items
+     */
     public void setupAutoComplete(final JTextField txtInput, final ArrayList<String> items) {
         final DefaultComboBoxModel model = new DefaultComboBoxModel();
         final JComboBox cbInput = new JComboBox(model) {
@@ -50,7 +69,6 @@ public class ChooserAdapter {
         });
 
         txtInput.addKeyListener(new KeyAdapter() {
-
             @Override
             public void keyPressed(KeyEvent e) {
                 setAdjusting(cbInput, true);

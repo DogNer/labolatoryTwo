@@ -1,3 +1,7 @@
+/**
+ * Клас AddItemWindow відповідає за вікно додавання товару(кількість) на склад
+ */
+
 import Adapter.ChooserAdapter;
 import Model.Item;
 import Model.StuctOfGroup;

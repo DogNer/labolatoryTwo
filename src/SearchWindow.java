@@ -38,7 +38,7 @@ public class SearchWindow extends JFrame{
 
                     while (matcher.find()) {
                         System.out.println(matcher.group());
-                        if (matcher.group() != null)
+                        if (matcher.group() == StuctOfGroup.arrayGoods.get(i).getName())
                             listModel.addElement(StuctOfGroup.arrayGoods.get(i).getName());
                     }
                 }
