@@ -1,3 +1,6 @@
+/**
+ * Клас для створення об'єктів товарів
+ */
 package Model;
 
 public class Item {

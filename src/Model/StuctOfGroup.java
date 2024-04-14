@@ -1,3 +1,6 @@
+/**
+ * Клас структури, де зберігаються всі групи та товари
+ */
 package Model;
 
 import java.util.ArrayList;

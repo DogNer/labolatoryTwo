@@ -1,7 +1,14 @@
+
+import Model.Group;
+import Model.Item;
 import Model.StuctOfGroup;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.*;
 
 public class MenuWindow extends JFrame{
     private JPanel panel1;
@@ -16,6 +23,14 @@ public class MenuWindow extends JFrame{
         this.setSize(900, 600);
 
         this.add(panel1);
+
+        btnGroup.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                GroupWindow groupWindow = new GroupWindow();
+                groupWindow.setVisible(true);
+            }
+        });
 
         btnAddItem.addActionListener(new AbstractAction() {
             @Override
@@ -77,4 +92,31 @@ public class MenuWindow extends JFrame{
             }
         });
     }
+
+    private boolean deleteGroup(String groupName) {
+        StuctOfGroup.arrayGoods.removeIf(item -> item.getGroup().equals(groupName));
+
+        StuctOfGroup.arrayGroup.removeIf(group -> group.getName().equals(groupName));
+
+        try {
+            Path path = Paths.get("Items/" + groupName + ".txt");
+
+            Files.delete(path);
+
+            System.out.println("File deleted successfully");
+        } catch (NoSuchFileException x) {
+            System.err.format("%s: no such file or directory%n", "src/Items/Крупи.txt");
+        } catch (DirectoryNotEmptyException x) {
+            System.err.format("%s not empty%n", "src/Items/Крупи.txt");
+        } catch (IOException x) {
+            System.err.println(x);
+        }
+
+        return false;
+    }
+
+    public JButton getBtnGroup() {
+        return btnGroup;
+    }
+
 }

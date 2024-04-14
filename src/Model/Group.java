@@ -1,3 +1,6 @@
+/**
+ * Клас для створення групи
+ */
 package Model;
 
 import java.util.ArrayList;
@@ -42,5 +45,12 @@ public class Group {
 
     public void addItemToArray(Item it){
         nameItems.add(it);
+    }
+
+    @Override
+    public String toString() {
+        return name + "{" +
+                "description='" + description + '\'' +
+                '}';
     }
 }
